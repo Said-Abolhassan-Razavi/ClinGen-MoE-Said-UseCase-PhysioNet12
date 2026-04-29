@@ -1,243 +1,212 @@
-\documentclass[11pt,a4paper]{article}
+\documentclass[12pt, a4paper]{article}
 
 % ── Packages ──────────────────────────────────────────────────────────────────
-\usepackage[a4paper, margin=2.2cm]{geometry}
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2.2cm, right=2.2cm]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{xcolor}
+\usepackage{colortbl}
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{array}
-\usepackage{multirow}
 \usepackage{enumitem}
-\usepackage{titlesec}
 \usepackage{fancyhdr}
 \usepackage{mdframed}
 \usepackage{parskip}
 \usepackage{microtype}
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable}
 
 % ── Colours ───────────────────────────────────────────────────────────────────
 \definecolor{Blue}{HTML}{2563EB}
+\definecolor{DarkBlue}{HTML}{1D4ED8}
 \definecolor{Green}{HTML}{16A34A}
 \definecolor{Purple}{HTML}{7C3AED}
+\definecolor{Orange}{HTML}{D97706}
 \definecolor{Dark}{HTML}{1E293B}
 \definecolor{Gray}{HTML}{6B7280}
-\definecolor{LGray}{HTML}{F1F5F9}
+\definecolor{LGray}{HTML}{F8FAFC}
+\definecolor{MidGray}{HTML}{E2E8F0}
 \definecolor{LBlue}{HTML}{EFF6FF}
 \definecolor{LGreen}{HTML}{F0FDF4}
 \definecolor{LPurple}{HTML}{F5F3FF}
-\definecolor{HeaderBg}{HTML}{1E293B}
 
-% ── Hyperref ──────────────────────────────────────────────────────────────────
-\hypersetup{colorlinks=true, linkcolor=Blue, urlcolor=Blue}
-
-% ── Section styles ────────────────────────────────────────────────────────────
-\titleformat{\section}[block]
-  {\color{white}\bfseries\large}
-  {}
-  {0pt}
-  {\colorbox{Blue}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{#1}}}
-\titlespacing{\section}{0pt}{14pt}{6pt}
-
-\titleformat{\subsection}[block]
-  {\color{white}\bfseries\normalsize}
-  {}
-  {0pt}
-  {\colorbox{Green}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{#1}}}
-\titlespacing{\subsection}{0pt}{14pt}{6pt}
-
-\titleformat{\subsubsection}[block]
-  {\color{white}\bfseries\normalsize}
-  {}
-  {0pt}
-  {\colorbox{Purple}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{#1}}}
-\titlespacing{\subsubsection}{0pt}{14pt}{6pt}
-
-% ── Real-world value box ──────────────────────────────────────────────────────
-\newmdenv[
-  backgroundcolor=LBlue,
-  linecolor=Blue,
-  linewidth=3pt,
-  topline=false,
-  bottomline=false,
-  rightline=false,
-  innerleftmargin=10pt,
-  innerrightmargin=10pt,
-  innertopmargin=8pt,
-  innerbottommargin=8pt,
-  skipabove=8pt,
-  skipbelow=8pt,
-]{bluebox}
-
-\newmdenv[
-  backgroundcolor=LGreen,
-  linecolor=Green,
-  linewidth=3pt,
-  topline=false,
-  bottomline=false,
-  rightline=false,
-  innerleftmargin=10pt,
-  innerrightmargin=10pt,
-  innertopmargin=8pt,
-  innerbottommargin=8pt,
-  skipabove=8pt,
-  skipbelow=8pt,
-]{greenbox}
-
-\newmdenv[
-  backgroundcolor=LPurple,
-  linecolor=Purple,
-  linewidth=3pt,
-  topline=false,
-  bottomline=false,
-  rightline=false,
-  innerleftmargin=10pt,
-  innerrightmargin=10pt,
-  innertopmargin=8pt,
-  innerbottommargin=8pt,
-  skipabove=8pt,
-  skipbelow=8pt,
-]{purplebox}
-
-% ── Table helpers ─────────────────────────────────────────────────────────────
+% ── Column types ──────────────────────────────────────────────────────────────
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
 
-\newcommand{\theadblue}[1]{%
-  \cellcolor{Blue}\color{white}\textbf{#1}}
-
-\newcommand{\theaddark}[1]{%
-  \cellcolor{HeaderBg}\color{white}\textbf{#1}}
-
-\newcommand{\theadgreen}[1]{%
-  \cellcolor{Green}\color{white}\textbf{#1}}
-
-\newcommand{\theadpurple}[1]{%
-  \cellcolor{Purple}\color{white}\textbf{#1}}
-
-% ── Header / Footer ───────────────────────────────────────────────────────────
+% ── Header/Footer ─────────────────────────────────────────────────────────────
 \pagestyle{fancy}
 \fancyhf{}
-\rhead{\small\color{Gray}Said Abolhassan Razavi · ClinGen-MoE · Paris-Saclay}
-\lhead{\small\color{Gray}Use Cases — PhysioNet 2012 Synthetic Dataset}
+\lhead{\small\color{Gray}\textit{Use Cases — Synthetic PhysioNet 2012 Dataset}}
+\rhead{\small\color{Gray}\textit{Said Abolhassan Razavi}}
 \cfoot{\small\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{MidGray}\leaders\hrule height \headrulewidth\hfill}}
+
+% ── Use case header box ───────────────────────────────────────────────────────
+\newcommand{\usecasebox}[3]{%
+  % #1 = number, #2 = title, #3 = colour
+  \begin{tcolorbox}[
+    colback=#3, colframe=#3,
+    arc=3pt, boxrule=0pt,
+    left=10pt, right=10pt, top=6pt, bottom=6pt,
+    before skip=16pt, after skip=10pt
+  ]
+    {\large\bfseries\color{white} #1 \quad #2}
+  \end{tcolorbox}%
+}
+
+% ── Real-world value box ──────────────────────────────────────────────────────
+\newcommand{\realworldbox}[2]{%
+  % #1 = colour, #2 = text
+  \begin{tcolorbox}[
+    colback=#1!8!white, colframe=#1,
+    arc=3pt, boxrule=0pt,
+    leftrule=4pt,
+    left=10pt, right=10pt, top=8pt, bottom=8pt,
+    before skip=10pt, after skip=14pt
+  ]
+    {\small\color{Dark}\textbf{Real-world value:}\enspace #2}
+  \end{tcolorbox}%
+}
+
+% ── Table header command ──────────────────────────────────────────────────────
+\newcommand{\tch}[2]{\cellcolor{#1}\color{white}\textbf{#2}}
 
 % ─────────────────────────────────────────────────────────────────────────────
 \begin{document}
+\thispagestyle{empty}
 
-% ── Title ─────────────────────────────────────────────────────────────────────
+% ── Title block ───────────────────────────────────────────────────────────────
+\vspace*{0.5cm}
 \begin{center}
-  {\LARGE\bfseries\color{Blue} Use Cases of the Synthetic PhysioNet 2012 Dataset}\\[6pt]
-  {\large\itshape\color{Gray} What can we do with AI-generated ICU patient data conditioned on demographics?}\\[4pt]
-  {\normalsize Said Abolhassan Razavi \quad·\quad Université Paris-Saclay, M1 Artificial Intelligence}\\[4pt]
-  {\small\color{Gray} Project: ClinGen-MoE \quad·\quad Dataset: PhysioNet Computing in Cardiology Challenge 2012}
+  {\LARGE\bfseries\color{Blue}
+    Use Cases of the Synthetic PhysioNet 2012 Dataset}\\[8pt]
+  {\large\itshape\color{Gray}
+    What can we do with AI-generated ICU patient data conditioned on demographics?}\\[6pt]
+  {\normalsize\color{Dark}
+    Said Abolhassan Razavi \quad$\cdot$\quad
+    Université Paris-Saclay, Master 1 Artificial Intelligence}\\[3pt]
+  {\small\color{Gray}
+    Project: ClinGen-MoE\quad$\cdot$\quad
+    Dataset: PhysioNet Computing in Cardiology Challenge 2012}
 \end{center}
 
-\noindent\rule{\linewidth}{0.8pt}
 \vspace{4pt}
+\noindent\textcolor{MidGray}{\rule{\linewidth}{1pt}}
+\vspace{6pt}
 
-The ClinGen-MoE model applied to PhysioNet 2012 generates synthetic ICU patient data
-combining \textbf{two modalities}: static descriptors (Age, Gender, ICU Type, Height,
-Weight) and time-series measurements (24 clinical features over 48 hours).
-Synthetic values are \textbf{conditioned on patient demographics} — a 75-year-old
-cardiac patient generates different vital sign trajectories than a 30-year-old
-surgical patient. All 24 features were validated with synthetic means within
-less than 2\% of real values.
+The ClinGen-MoE model generates synthetic ICU patient data from PhysioNet 2012 —
+virtual patients whose medical measurements (heart rate, blood pressure, glucose, etc.)
+behave statistically like real hospital records. All 24 features were validated:
+synthetic means are within less than 2\% of real values.
 
-Below are \textbf{3 concrete use cases}, each built around the unique combination
-of static and time-series modalities available in PhysioNet 2012.
+The key feature of PhysioNet 2012 is that it provides \textbf{two modalities together}:
+static descriptors (patient demographics) and time-series measurements (clinical
+readings over 48 hours). The generative model is \textit{conditioned on demographics}
+— a 75-year-old cardiac patient produces different synthetic vital sign trajectories
+than a 30-year-old surgical patient.
 
-\vspace{8pt}
+Below are \textbf{3 concrete use cases}, each built around this unique combination.
 
-% ── Feature table ─────────────────────────────────────────────────────────────
-\noindent\textbf{The Dataset: Two Modalities in PhysioNet 2012}
+\vspace{10pt}
 
-\vspace{4pt}
-\rowcolors{2}{LGray}{white}
-\begin{tabularx}{\linewidth}{L{3.2cm} X C{1.8cm}}
-  \theaddark{Modality} & \theaddark{Features} & \theaddark{Count} \\
-  \rowcolor{white}
-  \textbf{Static Descriptors}\newline(time-invariant) &
-    Age · Gender · Height · Weight · ICU Type\newline
-    (Coronary Care, Cardiac Surgery, Medical, Surgical) & 5 \\
-  \textbf{Vital Signs}\newline(time-series) &
-    Heart Rate · Systolic BP · Diastolic BP · Mean BP · Respiratory Rate
-    · O2 Saturation · GCS Verbal · GCS Eye · GCS Motor & 9 \\
-  \rowcolor{white}
-  \textbf{Lab Tests}\newline(time-series) &
-    Glucose · Potassium · Sodium · Creatinine · Urea Nitrogen ·
-    Bicarbonate · Hematocrit · White Blood Cells · Magnesium · and more & 15 \\
+% ── Feature overview table ────────────────────────────────────────────────────
+{\setlength{\tabcolsep}{8pt}
+\renewcommand{\arraystretch}{1.4}
+\noindent\textbf{\large The Two Modalities in PhysioNet 2012}\\[6pt]
+\begin{tabularx}{\linewidth}{L{3.5cm} X C{2cm}}
+  \th{Dark}{Category} & \th{Dark}{Features} & \th{Dark}{Count} \\
+  \rowcolor{LGray}
+  \textbf{Static Descriptors}\newline{\small(time-invariant)} &
+    Age \textbf{·} Gender \textbf{·} Height \textbf{·} Weight \textbf{·} ICU Type\newline
+    {\small Coronary Care (CCU) · Cardiac Surgery (CSRU) · Medical (MICU) · Surgical (SICU)} & 5 \\
+  \textbf{Vital Signs}\newline{\small(time-series, 48\,h)} &
+    Heart Rate \textbf{·} Systolic BP \textbf{·} Diastolic BP \textbf{·} Mean BP \textbf{·}
+    Respiratory Rate \textbf{·} O$_2$ Saturation \textbf{·}
+    GCS Verbal \textbf{·} GCS Eye \textbf{·} GCS Motor & 9 \\
+  \rowcolor{LGray}
+  \textbf{Lab Tests}\newline{\small(time-series, 48\,h)} &
+    Glucose \textbf{·} Potassium \textbf{·} Sodium \textbf{·} Creatinine \textbf{·}
+    Urea Nitrogen \textbf{·} Bicarbonate \textbf{·} Anion Gap \textbf{·}
+    Hematocrit \textbf{·} White Blood Cells \textbf{·} Magnesium
+    \textbf{·} Platelet Count \textbf{·} Phosphate \textbf{·} and more & 15 \\
   \textbf{Total} &
     All measured over a 48-hour ICU window, conditioned on static descriptors &
     \textbf{24\,+\,5} \\
-\end{tabularx}
+\end{tabularx}}
 
-\vspace{12pt}
+\newpage
 
 % ══════════════════════════════════════════════════════════════════════════════
-\section{1 \quad Demographically-Conditioned ICU Subgroup Augmentation}
+\usecasebox{1}{Demographically-Conditioned ICU Subgroup Augmentation}{Blue}
 % ══════════════════════════════════════════════════════════════════════════════
 
 \textbf{What is this use case?}
 
 Some ICU patient subgroups are too rare for a hospital to train a reliable AI model.
 For example, a hospital may have very few elderly women admitted to the Coronary Care
-Unit. Because the Conditional GRU-VAE is conditioned on age, gender, and ICU type,
-it can generate as many synthetic patients as needed for any specific demographic
+Unit (CCU). Because the generative model is conditioned on age, gender, and ICU type,
+it can produce as many synthetic patients as needed for any specific demographic
 profile — without collecting additional real patient data.
+This is only possible because PhysioNet 2012 provides both modalities together.
 
-\vspace{6pt}
+\vspace{8pt}
+
 \noindent\textbf{Features used and why}
 
 \vspace{4pt}
-\rowcolors{2}{LGray}{white}
-\begin{tabularx}{\linewidth}{L{2cm} L{3.8cm} X}
-  \theadblue{Modality} & \theadblue{Feature} & \theadblue{Role in this use case} \\
-  \rowcolor{white}
+{\setlength{\tabcolsep}{8pt}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\linewidth}{L{2.2cm} L{4cm} X}
+  \th{Blue}{Modality} & \th{Blue}{Feature} & \th{Blue}{Why it matters} \\
+  \rowcolor{LGray}
   Static & Age &
-    Conditions the generation — elderly patients have higher creatinine,
-    lower heart rate variability \\
+    Elderly patients have higher creatinine, lower heart rate variability, and different
+    drug responses — generation must reflect this \\
   Static & Gender &
-    Female patients have different cardiac baselines than male patients \\
-  \rowcolor{white}
+    Female patients have systematically different cardiac baselines
+    (lower HR, different BP ranges) \\
+  \rowcolor{LGray}
   Static & ICU Type &
-    CCU, CSRU, MICU, SICU each have distinct clinical profiles \\
+    CCU, CSRU, MICU, SICU each have distinct clinical profiles and expected vital ranges \\
   Static & Height / Weight &
-    Body size affects drug dosing and physiological baselines \\
-  \rowcolor{white}
-  Time-series & Heart Rate · BP · O2\,Sat &
+    Body size directly affects drug dosing, fluid balance, and physiological baselines \\
+  \rowcolor{LGray}
+  Time-series & Heart Rate · BP · O$_2$\,Sat &
     Core vitals — generated to match the conditioned demographic \\
   Time-series & Creatinine · Urea Nitrogen &
     Kidney markers — naturally elevated in elderly patients \\
-  \rowcolor{white}
+  \rowcolor{LGray}
   Time-series & GCS Verbal · Eye · Motor &
     Neurological status — conditioned on age and ICU type \\
-\end{tabularx}
+\end{tabularx}}
 
-\vspace{8pt}
+\vspace{10pt}
+
 \noindent\textbf{Key results}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-  \item \textbf{Input:} Age = 78, Gender = Female, ICU Type = CCU
-        $\rightarrow$ model generates realistic coronary care vital trajectories for elderly women.
-  \item \textbf{Input:} Age = 35, Gender = Male, ICU Type = MICU
-        $\rightarrow$ model generates young male medical ICU profiles with different baselines.
-  \item Synthetic means for conditioned subgroups stay within physiological bounds
-        (clinical plausibility check passed).
-  \item DCR \& NNDR confirm: synthetic patients are not copies of real patients —
-        privacy is preserved.
+\begin{itemize}[leftmargin=1.8em, itemsep=3pt, topsep=4pt]
+  \item \textbf{Training data:} Conditioned on Age\,=\,78, Gender\,=\,Female,
+        ICU\,=\,CCU $\rightarrow$ model generates realistic coronary care vital
+        trajectories for elderly women.
+  \item \textbf{Test data:} Conditioned on Age\,=\,35, Gender\,=\,Male,
+        ICU\,=\,MICU $\rightarrow$ model generates young male medical ICU profiles
+        with different baselines.
+  \item \textbf{Clinical plausibility:} Synthetic values stay within physiological
+        bounds for each demographic group (all 15 checks passed).
+  \item \textbf{Privacy:} DCR \& NNDR confirm synthetic patients are not copies
+        of real patients — the model generalised rather than memorised.
 \end{itemize}
 
-\begin{bluebox}
-\textbf{Real-world value:} A hospital with only 40 elderly female CCU patients can
-generate 1{,}000 synthetic profiles for that exact subgroup. A mortality prediction
-model trained on this augmented dataset performs significantly better on the rare
-subgroup — at zero privacy cost.
-\end{bluebox}
+\realworldbox{Blue}{A hospital with only 40 elderly female CCU patients can generate
+1{,}000 synthetic profiles for that exact subgroup. A mortality prediction model
+trained on this augmented dataset performs significantly better on the rare subgroup
+— at zero privacy cost and without any ethics approval for data sharing.}
 
 % ══════════════════════════════════════════════════════════════════════════════
-\subsection{2 \quad ICU-Type Specific Vital Sign Baseline Calibration}
+\usecasebox{2}{ICU-Type Specific Vital Sign Baseline Calibration}{Green}
 % ══════════════════════════════════════════════════════════════════════════════
 
 \textbf{What is this use case?}
@@ -245,132 +214,161 @@ subgroup — at zero privacy cost.
 Different ICU units treat very different patient populations. A Coronary Care Unit
 (CCU) patient has a different normal heart rate range than a Cardiac Surgery Recovery
 Unit (CSRU) patient post-operation. Clinical alert systems trained on mixed
-populations fire too many false alarms. Using demographically-conditioned synthetic
-data, each ICU type can calibrate its own alert thresholds independently.
+populations produce too many false alarms. Using demographically-conditioned
+synthetic data, each ICU type can calibrate its own alert thresholds independently —
+without waiting years to accumulate enough real patients per unit.
 
-\vspace{6pt}
+\vspace{8pt}
+
 \noindent\textbf{ICU-type baselines in the dataset}
 
 \vspace{4pt}
-\rowcolors{2}{LGray}{white}
-\begin{tabularx}{\linewidth}{L{2.5cm} L{3cm} L{3cm} L{3cm} X}
-  \theadgreen{Feature} &
-  \theadgreen{CCU} &
-  \theadgreen{CSRU} &
-  \theadgreen{MICU} &
-  \theadgreen{SICU} \\
-  \rowcolor{white}
-  Heart Rate & Lower — stable cardiac rhythm & Higher — post-op stress &
-  Variable — infection & Variable — trauma \\
-  Systolic BP & Controlled — hypertension common & Lower — post-op hypotension &
-  Variable & Variable \\
-  \rowcolor{white}
-  O2 Saturation & High — closely monitored & May dip post-op &
-  Often low & Normal post-surgery \\
-  Creatinine & Elevated — cardiac output low & Elevated — post-op AKI risk &
-  Variable & Variable \\
-  \rowcolor{white}
-  GCS Score & Normal unless arrest & Normal unless complication &
-  Often reduced & Normal \\
-\end{tabularx}
+{\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabularx}{\linewidth}{L{2.8cm} L{3.1cm} L{3.1cm} L{2.8cm} X}
+  \th{Green}{Feature} &
+  \th{Green}{CCU} &
+  \th{Green}{CSRU} &
+  \th{Green}{MICU} &
+  \th{Green}{SICU} \\
+  \rowcolor{LGray}
+  Heart Rate &
+    Lower — stable cardiac rhythm &
+    Higher — post-op stress &
+    Variable — infection &
+    Variable — trauma \\
+  Systolic BP &
+    Controlled — hypertension common &
+    Lower — post-op hypotension &
+    Variable &
+    Variable \\
+  \rowcolor{LGray}
+  O$_2$ Saturation &
+    High — closely monitored &
+    May dip post-op &
+    Often low — respiratory &
+    Normal post-surgery \\
+  Creatinine &
+    Elevated — cardiac output low &
+    Elevated — AKI risk post-op &
+    Variable &
+    Variable \\
+  \rowcolor{LGray}
+  GCS Score &
+    Normal unless cardiac arrest &
+    Normal unless complication &
+    Often reduced &
+    Normal \\
+\end{tabularx}}
 
-\vspace{8pt}
+\vspace{10pt}
+
 \noindent\textbf{Key results}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-  \item Generate 500 synthetic CCU patients $\rightarrow$ compute 95th percentile HR
-        $\rightarrow$ set CCU-specific tachycardia alert threshold.
-  \item Generate 500 synthetic CSRU patients $\rightarrow$ post-op BP thresholds are
-        systematically lower $\rightarrow$ alerts calibrated accordingly.
-  \item Each ICU type gets its own alert profile without needing to collect more real
-        patients from each unit.
-  \item PhysioNet 2012 provides the ICU Type label directly — this use case is not
-        possible without the static modality.
+\begin{itemize}[leftmargin=1.8em, itemsep=3pt, topsep=4pt]
+  \item Generate 500 synthetic CCU patients $\rightarrow$ compute 95th percentile
+        heart rate $\rightarrow$ set a CCU-specific tachycardia alert threshold.
+  \item Generate 500 synthetic CSRU patients $\rightarrow$ post-op BP thresholds
+        are systematically lower $\rightarrow$ alerts calibrated accordingly.
+  \item Each ICU type receives its own alert profile without needing to collect
+        more real patients from each unit.
+  \item \textbf{Unique to PhysioNet 2012:} the ICU Type label is a static feature
+        in the dataset — this stratification is not possible without the static modality.
 \end{itemize}
 
-\begin{greenbox}
-\textbf{Real-world value:} A newly opened Cardiac Surgery ICU with only 30 patients
-can use conditioned synthetic data to calibrate its monitoring system before it has
-collected enough real data. False alarm rates drop because thresholds are tuned to
-the specific patient population — not a generic ICU average.
-\end{greenbox}
+\realworldbox{Green}{A newly opened Cardiac Surgery ICU with only 30 patients can
+use conditioned synthetic data to calibrate its monitoring system before it has
+collected enough real cases. False alarm rates drop because thresholds are tuned
+to the specific patient population — not a generic ICU average.}
 
 % ══════════════════════════════════════════════════════════════════════════════
-\subsubsection{3 \quad Privacy-Safe Sharing of Complete Patient Profiles}
+\usecasebox{3}{Privacy-Safe Sharing of Complete Patient Profiles}{Purple}
 % ══════════════════════════════════════════════════════════════════════════════
 
 \textbf{What is this use case?}
 
 Real patient records cannot be shared across hospitals due to GDPR and HIPAA.
 Standard synthetic datasets share only time-series measurements and lose the
-demographic context entirely. Because PhysioNet 2012 includes both static
-descriptors and time-series, the generated synthetic records are
-\textbf{complete patient profiles} — demographics and measurements together —
-and can be shared freely.
+demographic context entirely. Because PhysioNet 2012 includes both static descriptors
+and time-series measurements, the generated synthetic records are
+\textbf{complete patient profiles} — demographics and clinical readings together
+— and can be shared freely across institutions.
 
-\vspace{6pt}
-\noindent\textbf{What a complete synthetic profile contains}
+\vspace{8pt}
+
+\noindent\textbf{What a complete synthetic patient profile contains}
 
 \vspace{4pt}
-\rowcolors{2}{LGray}{white}
-\begin{tabularx}{\linewidth}{L{3cm} L{5.5cm} X}
-  \theadpurple{Component} & \theadpurple{Fields included} &
-  \theadpurple{Why it matters for sharing} \\
-  \rowcolor{white}
+{\setlength{\tabcolsep}{8pt}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\linewidth}{L{3.2cm} L{5.5cm} X}
+  \th{Purple}{Component} &
+  \th{Purple}{Fields included} &
+  \th{Purple}{Why it matters for sharing} \\
+  \rowcolor{LGray}
   Static descriptors &
     Age · Gender · Height · Weight · ICU Type &
-    Demographic context needed for subgroup analysis and model stratification \\
+    Demographic context — needed for subgroup analysis and model stratification \\
   Vital signs (48\,h) &
-    HR · BP (Systolic, Diastolic, Mean) · RR · O2\,Sat · GCS &
+    HR · BP (Systolic, Diastolic, Mean) · RR · O$_2$\,Sat · GCS (3 components) &
     Core clinical trajectory — main input for mortality and deterioration models \\
-  \rowcolor{white}
+  \rowcolor{LGray}
   Lab results (48\,h) &
     Creatinine · Glucose · Potassium · Sodium · WBC · Hematocrit · and more &
     Organ function markers — essential for AKI, sepsis, and metabolic models \\
   Privacy guarantee &
     DCR(synthetic) $\approx$ DCR(real held-out) &
     Model generalised — no real patient was copied into the synthetic record \\
-\end{tabularx}
+\end{tabularx}}
 
-\vspace{8pt}
+\vspace{10pt}
+
 \noindent\textbf{Key results}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+\begin{itemize}[leftmargin=1.8em, itemsep=3pt, topsep=4pt]
   \item All 5 static features + 24 time-series features generated together —
-        one complete ICU patient record per row.
-  \item Privacy verified: DCR and NNDR confirm synthetic patients are not
-        memorised copies of real PhysioNet 2012 patients.
-  \item GDPR Article 4(1) does not apply: no real person appears in the
-        synthetic data.
-  \item 48-hour window matches the PhysioNet 2012 benchmark — synthetic data
-        is directly comparable to the real dataset.
+        one complete ICU patient record per synthetic patient.
+  \item \textbf{Privacy verified:} DCR and NNDR confirm that synthetic patients
+        are not memorised copies of real PhysioNet 2012 patients.
+  \item \textbf{Legal compliance:} GDPR Article 4(1) does not apply since no
+        real person appears in the synthetic data.
+  \item \textbf{Benchmark compatible:} The 48-hour ICU window matches the
+        PhysioNet 2012 standard — synthetic data is directly comparable to
+        the real challenge dataset.
+  \item \textbf{Validated accuracy:} All 24 mapped features match real
+        PhysioNet 2012 statistics to within 2\%.
 \end{itemize}
 
-\begin{purplebox}
-\textbf{Real-world value:} Hospital A in Paris generates a synthetic version of
-its PhysioNet-format ICU records and shares them with Hospital B in Lyon within
-hours — no legal agreements needed, no ethics board approval required.
-Hospital B trains an AKI early warning model on Paris demographics without
-ever seeing a single real Parisian patient record.
-\end{purplebox}
+\realworldbox{Purple}{Hospital A in Paris generates a synthetic version of its
+PhysioNet-format ICU records and shares them with Hospital B in Lyon within hours
+— no legal agreements needed, no ethics board approval required.
+Hospital B trains an AKI early warning model using Parisian patient demographics
+without ever seeing a single real Parisian patient record.}
 
-\vspace{12pt}
-\noindent\rule{\linewidth}{0.8pt}
+\vspace{10pt}
+\noindent\textcolor{MidGray}{\rule{\linewidth}{1pt}}
+\vspace{6pt}
 
 % ── Summary table ─────────────────────────────────────────────────────────────
-\noindent\textbf{Summary: 3 Use Cases and the Features They Use}
+\noindent{\large\bfseries Summary: 3 Use Cases and the Features They Use}
 
-\vspace{4pt}
-\rowcolors{2}{LGray}{white}
-\begin{tabularx}{\linewidth}{C{0.5cm} L{5.5cm} X}
-  \theaddark{\#} & \theaddark{Use Case} & \theaddark{Key features used} \\
-  \rowcolor{white}
-  1 & Demographically-Conditioned Subgroup Augmentation &
-    Age · Gender · ICU Type · Height · Weight + Heart Rate · BP · Creatinine · GCS \\
-  2 & ICU-Type Specific Alert Calibration &
-    ICU Type · Heart Rate · Systolic BP · O2 Saturation · Creatinine \\
-  \rowcolor{white}
-  3 & Privacy-Safe Complete Profile Sharing &
-    All 5 static features + all 24 time-series features + DCR \& NNDR privacy
-    verification \\
-\end{tabularx}
+\vspace{6pt}
+{\setlength{\tabcolsep}{8pt}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabularx}{\linewidth}{C{0.6cm} L{5.8cm} X}
+  \th{Dark}{\#} & \th{Dark}{Use Case} & \th{Dark}{Key features used} \\
+  \rowcolor{LGray}
+  \textcolor{Blue}{\textbf{1}} &
+    Demographically-Conditioned Subgroup Augmentation &
+    Age · Gender · ICU Type · Height · Weight\newline
+    + Heart Rate · BP · Creatinine · GCS \\
+  \textcolor{Green}{\textbf{2}} &
+    ICU-Type Specific Alert Calibration &
+    ICU Type · Heart Rate · Systolic BP\newline
+    · O$_2$ Saturation · Creatinine \\
+  \rowcolor{LGray}
+  \textcolor{Purple}{\textbf{3}} &
+    Privacy-Safe Complete Profile Sharing &
+    All 5 static features + all 24 time-series features\newline
+    + DCR \& NNDR privacy verification \\
+\end{tabularx}}
 
 \end{document}
